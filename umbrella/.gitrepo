@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:pdlfs/umbrella
+	branch = master
+	commit = 7123a7a0097c1ea1d68f3da9b73aec2784f041c0
+	parent = 2abb10eefc31410b89caa26fd0ad29fd3dca7c35
+	method = merge
+	cmdver = 0.4.9
