@@ -605,6 +605,16 @@ if (NOT CMAKE_BUILD_TYPE)
                   "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 endif ()
 
+#
+# set default CXX standard and insert it to cache.  add additional options.
+#
+if (NOT UMBRELLA_CXX_STANDARD)
+    set (UMBRELLA_CXX_STANDARD 14
+         CACHE STRING "C++ standard for all projects." FORCE)
+    set_property (CACHE UMBRELLA_CXX_STANDARD PROPERTY STRINGS
+                  "11" "14" "17")
+endif ()
+
 set (UMBRELLA_BUILDTESTS "OFF" CACHE BOOL "Default for build unit tests")
 find_file (UMBRELLA_CACHEDIR cache PATH ${CMAKE_SOURCE_DIR}
            DOC "Cache directory of tar files" NO_DEFAULT_PATH)
@@ -745,6 +755,7 @@ set (UMBRELLA_CMAKECACHE
                 -DCMAKE_PREFIX_PATH:STRING=${UMBRELLA_PREFIX_PATH}
                 -DCMAKE_INCLUDE_PATH:STRING=${CMAKE_INCLUDE_PATH}
                 -DCMAKE_LIBRARY_PATH:STRING=${CMAKE_LIBRARY_PATH}
+                -DCMAKE_CXX_STANDARD:STRING=${UMBRELLA_CXX_STANDARD}
                 -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY:BOOL=1
                 -DCMAKE_INSTALL_RPATH:STRING=${UMBRELLA_LIBDIRS}
                 -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE
@@ -780,6 +791,7 @@ if (UMBRELLA_MPI)
     message (STATUS "  MPI C wrapper:  ${MPI_C_COMPILER}")
 endif ()
 message (STATUS "  crosscompiling: ${CMAKE_CROSSCOMPILING}")
+message (STATUS "  CXX standard: ${UMBRELLA_CXX_STANDARD}")
 message (STATUS "  build tests default: ${UMBRELLA_BUILDTESTS}")
 message (STATUS "  run tests default: ${UMBRELLA_RUNTESTS}")
 message (STATUS "  ${UMBRELLA_PKGCFGPATH}")
