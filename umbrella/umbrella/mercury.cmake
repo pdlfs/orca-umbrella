@@ -43,6 +43,7 @@ umbrella_defineopt (MERCURY_POST_LIMIT "ON" BOOL "Enable post limit")
 umbrella_defineopt (MERCURY_SELF_FORWARD "OFF" BOOL "Enable self forward thread")
 umbrella_defineopt (MERCURY_STATS "OFF" BOOL "Enable stats reporting")
 umbrella_defineopt (MERCURY_CHECKSUM "OFF" BOOL "Enable checksuming")
+umbrella_defineopt (MERCURY_USE_XDR "OFF" BOOL "Use SunRPC XDR")
 
 #
 # XXXCDC: bmi always installs under .so, cci uses ${suf} (below)
@@ -80,7 +81,7 @@ set (MERCURY_CMAKE_ARGS -DNA_USE_MPI=OFF -DNA_USE_SM=${MERCURY_SM}
      -DMERCURY_ENABLE_STATS:BOOL=${MERCURY_STATS}
      -DNA_USE_BMI=${MERCURY_BMI} -DNA_USE_CCI=${MERCURY_CCI}
      -DNA_USE_OFI=${MERCURY_OFI} -DNA_USE_PSM=${MERCURY_PSM}
-     -DNA_USE_PSM2=${MERCURY_PSM2})
+     -DNA_USE_PSM2=${MERCURY_PSM2} -DMERCURY_USE_XDR=${MERCURY_USE_XDR})
 
 # now handle the NAs
 if (MERCURY_BMI)
