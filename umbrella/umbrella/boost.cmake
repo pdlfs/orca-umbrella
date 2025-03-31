@@ -24,13 +24,13 @@ if (NOT TARGET boost)
 # umbrella option variables
 #
 umbrella_defineopt (BOOST_BASEURL
-    "https://dl.bintray.com/boostorg/release" STRING "base url for boost")
-umbrella_defineopt (BOOST_URLDIR "1.65.1/source" STRING "boost subdir")
-umbrella_defineopt (BOOST_URLFILE "boost_1_65_1.tar.gz"
+    "https://archives.boost.io/release" STRING "base url for boost")
+umbrella_defineopt (BOOST_URLDIR "1.74.0/source" STRING "boost subdir")
+umbrella_defineopt (BOOST_URLFILE "boost_1_74_0.tar.gz"
     STRING "boost tar file name")
-umbrella_defineopt (BOOST_URLMD5 "ee64fd29a3fe42232c6ac3c419e523cf"
-    STRING "MD5 of tar file")
-
+umbrella_defineopt (BOOST_SHA256
+    "afff36d392885120bcac079148c177d1f6f7730ec3d47233aa51b0afa4db94a5"
+    STRING "sha256sum of tar file")
 umbrella_defineopt (BOOST_WITHLIBS "system,thread,date_time,program_options"
     STRING "boost --with-libraries bootstrap.sh flag")
 
@@ -39,7 +39,7 @@ umbrella_defineopt (BOOST_WITHLIBS "system,thread,date_time,program_options"
 #
 umbrella_download (BOOST_DOWNLOAD boost ${BOOST_URLFILE}
     URL "${BOOST_BASEURL}/${BOOST_URLDIR}/${BOOST_URLFILE}"
-    URL_MD5 ${BOOST_URLMD5})
+    URL_HASH SHA256=${BOOST_SHA256})
 umbrella_patchcheck (BOOST_PATCHCMD boost)
 
 #
@@ -47,7 +47,7 @@ umbrella_patchcheck (BOOST_PATCHCMD boost)
 #
 ExternalProject_Add (boost ${BOOST_DOWNLOAD} ${BOOST_PATCHCMD}
     CONFIGURE_COMMAND cd <SOURCE_DIR> && 
-        ${UMBRELLA_COMP} ${UMBRELLA_CPPFLAGS} ${UMBRELLA_LDFLAGS}
+        env ${UMBRELLA_COMP} ${UMBRELLA_CPPFLAGS} ${UMBRELLA_LDFLAGS}
           ./bootstrap.sh --with-libraries=${BOOST_WITHLIBS}
                        --prefix=${CMAKE_INSTALL_PREFIX}
     BUILD_COMMAND cd <SOURCE_DIR> && 
