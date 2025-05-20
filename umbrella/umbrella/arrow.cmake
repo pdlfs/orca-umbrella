@@ -53,6 +53,7 @@ umbrella_defineopt (ARROW_DEPENDENCY_SOURCE "AUTO" STRING
 # configure flags for arrow
 #
 set(ARROW_CMAKE_ARGS
+  -DARROW_CSV=ON
   -DARROW_MIMALLOC=OFF  # enabled by default, triggers download
   -DARROW_WITH_RE2=OFF
   -DARROW_WITH_UTF8PROC=OFF
