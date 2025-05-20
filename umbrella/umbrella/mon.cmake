@@ -36,12 +36,13 @@ umbrella_patchcheck (MON_PATCHCMD mon)
 include (umbrella/googletest)
 include (umbrella/mercury)
 include (umbrella/arrow)
+include (umbrella/yaml-cpp)
 
 #
 # create mon target
 #
 ExternalProject_Add (mon
-    DEPENDS googletest mercury arrow
+    DEPENDS googletest mercury arrow yaml-cpp
     ${MON_DOWNLOAD} ${MON_PATCHCMD}
     CMAKE_ARGS -DCMAKE_PREFIX_PATH=${UMBRELLA_PREFIX_PATH}
     CMAKE_CACHE_ARGS ${UMBRELLA_CMAKECACHE}
