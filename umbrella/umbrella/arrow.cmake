@@ -69,7 +69,8 @@ set(ARROW_CMAKE_ARGS
 #
 # set dependencies
 #
-set (ARROW_DEPENDS)
+set (ARROW_DEPENDS xsimd)
+include (umbrella/xsimd)
 
 # Build umbrella dependencies if source is not BUNDLED
 if (NOT ARROW_DEPENDENCY_SOURCE STREQUAL "BUNDLED")
