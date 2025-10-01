@@ -18,7 +18,7 @@ if (NOT TARGET snappy)
 #
 umbrella_defineopt (SNAPPY_REPO "https://github.com/google/snappy"
                     STRING "SNAPPY GIT repository")
-umbrella_defineopt (SNAPPY_TAG "master" STRING "SNAPPY GIT tag")
+umbrella_defineopt (SNAPPY_TAG "main" STRING "SNAPPY GIT tag")
 umbrella_defineopt (SNAPPY_TAR "snappy-${SNAPPY_TAG}.tar.gz" 
                     STRING "SNAPPY cache tar file")
 
@@ -34,6 +34,11 @@ umbrella_patchcheck (SNAPPY_PATCHCMD snappy)
 #
 ExternalProject_Add (snappy ${SNAPPY_DOWNLOAD} ${SNAPPY_PATCHCMD}
     CMAKE_ARGS -DBUILD_SHARED_LIBS=ON
+                -DSNAPPY_BUILD_TESTS=OFF
+                -DSNAPPY_BUILD_BENCHMARKS=OFF
+                -DBENCHMARK_ENABLE_GTEST_TESTS=OFF
+                -DBENCHMARK_USE_BUNDLED_GTEST=OFF
+                -DINSTALL_GTEST=OFF
     CMAKE_CACHE_ARGS ${UMBRELLA_CMAKECACHE}
     UPDATE_COMMAND "" )
 

@@ -74,6 +74,7 @@ umbrella_opt_default (BOOST_WITHLIBS
 #
 # Actual repos we want to build
 #
+include (umbrella/snappy)
 include (umbrella/googletest)
 include (umbrella/arrow)
 include (umbrella/mercury)
