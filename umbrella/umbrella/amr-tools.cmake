@@ -12,7 +12,7 @@
 
 if (NOT TARGET amr-tools)
 
-umbrella_defineopt (AMR_TOOLS_REPO "https://github.com/anku94/amr.git"
+umbrella_defineopt (AMR_TOOLS_REPO "https://github.com/pdlfs/amr-tools.git"
      STRING "AMR_TOOLS GIT repository")
 umbrella_defineopt (AMR_TOOLS_TAG "main" STRING "AMR_TOOLS GIT tag")
 umbrella_defineopt (AMR_TOOLS_TAR "amr-tools-${AMR_TOOLS_TAG}.tar.gz"

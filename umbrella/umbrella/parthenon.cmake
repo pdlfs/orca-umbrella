@@ -14,7 +14,7 @@ if (NOT TARGET parthenon)
 
 umbrella_defineopt (PARTHENON_REPO "https://github.com/anku94/parthenon.git"
      STRING "PARTHENON GIT repository")
-umbrella_defineopt (PARTHENON_TAG "develop" STRING "PARTHENON GIT tag")
+umbrella_defineopt (PARTHENON_TAG "lb3bar" STRING "PARTHENON GIT tag")
 umbrella_defineopt (PARTHENON_TAR "parthenon-${PARTHENON_TAG}.tar.gz"
      STRING "PARTHENON cache tar file")
 #
@@ -36,7 +36,10 @@ set (PARTHENON_DEPENDS amr-tools)
 include (umbrella/amr-tools)
 
 if (NOT PARTHENON_DISABLE_HDF5)
+    umbrella_opt_default (HDF5_TAG "hdf5_1_12_2")
+    umbrella_opt_default (HDF5_ENABLE_PARALLEL "ON")
     set (PARTHENON_DEPENDS ${PARTHENON_DEPENDS} hdf5)
+    include (umbrella/hdf5)
 endif()
 
 if (PARTHENON_DISABLE_OPENMP) 

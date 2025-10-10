@@ -14,7 +14,7 @@ if (NOT TARGET kokkos)
 
 umbrella_defineopt (KOKKOS_REPO "https://github.com/kokkos/kokkos.git"
      STRING "KOKKOS GIT repository")
-umbrella_defineopt (KOKKOS_TAG "4.0.01" STRING "KOKKOS GIT tag")
+umbrella_defineopt (KOKKOS_TAG "3.7.02" STRING "KOKKOS GIT tag")
 umbrella_defineopt (KOKKOS_TAR "kokkos-${KOKKOS_TAG}.tar.gz"
      STRING "KOKKOS cache tar file")
 #
