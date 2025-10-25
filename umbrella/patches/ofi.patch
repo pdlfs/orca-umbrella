@@ -1,0 +1,58 @@
+diff --git a/prov/verbs/src/verbs_cm.c b/prov/verbs/src/verbs_cm.c
+index 5f4a7edbc..665f857f2 100644
+--- a/prov/verbs/src/verbs_cm.c
++++ b/prov/verbs/src/verbs_cm.c
+@@ -33,6 +33,7 @@
+ #include "config.h"
+
+ #include "verbs_ofi.h"
++#include <stdlib.h>
+
+
+ static int vrb_copy_addr(void *dst_addr, size_t *dst_addrlen, void *src_addr)
+@@ -53,6 +54,34 @@ static int vrb_copy_addr(void *dst_addr, size_t *dst_addrlen, void *src_addr)
+ 	return 0;
+ }
+
++/* -------------------------------------------------------------------------
++ * ORCA: set QoSClass/TOS (0..255) on the rdma_cm_id BEFORE route resolution.
++ * This value is carried in the PathRecord query; OpenSM QoS policy can match
++ * it and return a PathRecord with the desired SL. If unset, default is 0.
++ * ------------------------------------------------------------------------- */
++static void orca_set_qos_tos(struct rdma_cm_id *id)
++{
++	const char *env = getenv("ORCA_OFI_TOS");
++	if (!env || !id)
++		return;
++
++	char *end = NULL;
++	unsigned long v = strtoul(env, &end, 0);
++	if (end == env)  /* not a number */
++		return;
++
++	uint8_t tos = (uint8_t)(v & 0xFF);
++	if (rdma_set_option(id, RDMA_OPTION_ID, RDMA_OPTION_ID_TOS,
++			    &tos, sizeof(tos))) {
++		FI_WARN(&vrb_prov, FI_LOG_EP_CTRL,
++			"ORCA: rdma_set_option(TOS=%u) failed: %s\n",
++			tos, strerror(errno));
++	} else {
++		FI_INFO(&vrb_prov, FI_LOG_EP_CTRL,
++			"ORCA: set QoSClass/TOS=%u on CM ID\n", tos);
++	}
++}
++
+ static int vrb_msg_ep_setname(fid_t ep_fid, void *addr, size_t addrlen)
+ {
+ 	void *save_addr;
+@@ -205,6 +234,10 @@ vrb_msg_ep_connect(struct fid_ep *ep_fid, const void *addr,
+ 	ofi_genlock_lock(&vrb_ep2_progress(ep)->ep_lock);
+ 	assert(ep->state == VRB_IDLE);
+ 	ep->state = VRB_RESOLVE_ADDR;
++
++	/* ORCA: set QoSClass/TOS before address/route resolution */
++	orca_set_qos_tos(ep->id);
++
+ 	vrb_prof_func_start("rdma_resolve_addr");
+ 	if (rdma_resolve_addr(ep->id, ep->info_attr.src_addr,
+ 			      ep->info_attr.dest_addr, VERBS_RESOLVE_TIMEOUT)) {
