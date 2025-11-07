@@ -58,7 +58,6 @@ umbrella_opt_default (GOOGLETEST_TAG "v1.15.2")
 umbrella_opt_default (MON_TAG "main")
 umbrella_opt_default (MERCURY_REPO "https://github.com/chuckcranor/mercury.git")
 umbrella_opt_default (MERCURY_TAG "hg_rpcgen")
-umbrella_opt_default (YAML_CPP_TAG "0.8.0")
 
 #
 # any additional cache variables we want to add that are not already

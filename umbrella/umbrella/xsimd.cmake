@@ -19,9 +19,9 @@ if (NOT TARGET xsimd)
 
 umbrella_defineopt (XSIMD_BASEURL "https://github.com/xtensor-stack/xsimd/archive/refs/tags/"
                     STRING "xsimd base url")
-umbrella_defineopt (XSIMD_URLFILE "11.0.0.tar.gz"
+umbrella_defineopt (XSIMD_URLFILE "12.0.0.tar.gz"
                     STRING "xsimd url file")
-umbrella_defineopt (XSIMD_URLMD5 "8b734292633a5f931b7ffad028a53f58"
+umbrella_defineopt (XSIMD_URLMD5 "ca3977abe2cebd5acd0405e6a02277a1"
                     STRING "xsimd url md5")
 
 #

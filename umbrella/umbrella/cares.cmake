@@ -18,11 +18,11 @@ if (NOT TARGET cares)
 #
 umbrella_defineopt (CARES_BASEURL "https://github.com/c-ares/c-ares"
                     STRING "cares base url")
-umbrella_defineopt (CARES_URLDIR "releases/download/cares-1_17_2"
+umbrella_defineopt (CARES_URLDIR "releases/download/cares-1_21_0"
                     STRING "cares url dir")
-umbrella_defineopt (CARES_URLFILE "c-ares-1.17.2.tar.gz"
+umbrella_defineopt (CARES_URLFILE "c-ares-1.21.0.tar.gz"
                     STRING "cares url file")
-umbrella_defineopt (CARES_URLMD5 "3802264830c6886411dac606c66fdbf8"
+umbrella_defineopt (CARES_URLMD5 "cf0808e65175571ef23d7c4a6d4673d6"
                     STRING "cares url md5")
 
 #
