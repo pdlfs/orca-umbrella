@@ -18,7 +18,7 @@ if (NOT TARGET gotcha)
 umbrella_defineopt (GOTCHA_BASEURL
                     "https://github.com/LLNL/GOTCHA/archive/refs/tags"
                     STRING "GOTCHA download URL base")
-umbrella_defineopt (GOTCHA_URLFILE "1.0.8.tar.gz"
+umbrella_defineopt (GOTCHA_URLFILE "1.0.7.tar.gz"
                     STRING "GOTCHA tar file")
 umbrella_defineopt (GOTCHA_URLMD5 "42e0fe959d4ccf100f0856be74239f6f"
                     STRING "MD5 of tar file")

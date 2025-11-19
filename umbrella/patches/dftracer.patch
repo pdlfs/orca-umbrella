@@ -1,0 +1,22 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4ba88ee..2ae2c69 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -206,7 +206,7 @@ else()
+ set(DEPENDENCY_LIB ${CMAKE_EXE_LINKER_FLAGS} $ENV{LDFLAGS}  -lpthread)
+ set(DEPENDENCY_LIBRARY_DIRS "")
+
+-find_package(cpp-logger 1.0.0 REQUIRED)
++find_package(cpp-logger 1.1.0 REQUIRED)
+ if (${cpp-logger_FOUND})
+         include_directories(${CPP_LOGGER_INCLUDE_DIRS})
+         set(DEPENDENCY_LIB ${DEPENDENCY_LIB} ${CPP_LOGGER_LIBRARIES})
+@@ -221,7 +221,7 @@ else ()
+         message(FATAL_ERROR "-- [CPP_LOGGER] is needed for ${PROJECT_NAME} build")
+ endif ()
+
+-find_package(brahma 2.1.0 REQUIRED)
++find_package(brahma 3.0.0 REQUIRED)
+ if (${brahma_FOUND})
+         message(STATUS "[BRAHMA] found brahma at ${BRAHMA_INCLUDE_DIRS}")
+         include_directories(${BRAHMA_INCLUDE_DIRS})
