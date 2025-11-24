@@ -27,13 +27,13 @@ umbrella_defineopt (MVAPICH_URLFILE "mvapich2-2.3.7-1.tar.gz"
 umbrella_defineopt (MVAPICH_URLMD5 "22f78ec18d417781ff803943ae62d6a9"
     STRING "MD5 of tar file")
 #
-# XXX: default dev is ch3:mrail
-umbrella_defineopt(MVAPICH_DEVICE "" STRING "--with-device option")
+# Cluster profile for device configuration
+umbrella_defineopt(MVAPICH_PROFILE "" STRING "Cluster profile (wolf, orca)")
 
 #
 # local vars
 #
-unset(mvapich_withdev)
+unset(mvapich_devflags)
 unset(mvapich_xtradeps)
 
 #
@@ -51,33 +51,34 @@ umbrella_patchcheck (MVAPICH_PATCHCMD mvapich)
 include (umbrella/rdma-core)
 
 #
-# device options
+# profile-based configuration
 #
-if ("${MVAPICH_DEVICE}" STREQUAL "")
-    message(STATUS "  MVAPICH default device selected")
-elseif ("${MVAPICH_DEVICE}" STREQUAL "ch3:psm" OR
-    "${MVAPICH_DEVICE}" STREQUAL "psm")
-    message(STATUS "  MVAPICH psm device selected")
+if ("${MVAPICH_PROFILE}" STREQUAL "wolf")
+    message(STATUS "  MVAPICH wolf profile: PSM for QLogic fabric")
     include (umbrella/psm)
     set (mvapich_xtradeps "psm")
-    set (mvapich_withdev "--with-device=ch3:psm")
-elseif ("${MVAPICH_DEVICE}" STREQUAL "ch3:nemesis" OR
-    "${MVAPICH_DEVICE}" STREQUAL "nemesis")
-    message(STATUS "  MVAPICH nemesis device selected")
-    set (mvapich_withdev "--with-device=ch3:nemesis")
-else ()
-     message(FATAL_ERROR "MVAPICH unknown device ${MVAPICH_DEVICE}")
-endif ()
+    set (mvapich_devflags "--with-device=ch3:psm")
+elseif ("${MVAPICH_PROFILE}" STREQUAL "orca")
+    message(STATUS "  MVAPICH orca profile: MRAIL/gen2 for Mellanox RoCE")
+    set (mvapich_devflags "--with-device=ch3:mrail" "--with-rdma=gen2")
+elseif ("${MVAPICH_PROFILE}" STREQUAL "")
+    message(STATUS "  MVAPICH default configuration")
+else()
+    message(FATAL_ERROR "MVAPICH unknown profile ${MVAPICH_PROFILE}")
+endif()
 
 #
 # create mvapich target
 #
 ExternalProject_Add (mvapich DEPENDS rdma-core ${mvapich_xtradeps}
     ${MVAPICH_DOWNLOAD} ${MVAPICH_PATCHCMD}
-    CONFIGURE_COMMAND <SOURCE_DIR>/configure ${UMBRELLA_COMP}
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
+                      FFLAGS=-fallow-argument-mismatch
+                      FCFLAGS=-fallow-argument-mismatch
+                      <SOURCE_DIR>/configure ${UMBRELLA_COMP}
                       ${UMBRELLA_CPPFLAGS} ${UMBRELLA_LDFLAGS}
                       --prefix=${CMAKE_INSTALL_PREFIX}
-                      ${mvapich_withdev}
+                      ${mvapich_devflags}
                       BUILD_IN_SOURCE 1  # XXX: bug. fails w/o this.
                       UPDATE_COMMAND "")
 
