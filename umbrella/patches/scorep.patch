@@ -1,0 +1,53 @@
+diff --git a/src/adapters/mpi/c/wrappers/SCOREP_Mpi_C_Request.c b/src/adapters/mpi/c/wrappers/SCOREP_Mpi_C_Request.c
+index 2fd5e05..6e0b5c1 100644
+--- a/src/adapters/mpi/c/wrappers/SCOREP_Mpi_C_Request.c
++++ b/src/adapters/mpi/c/wrappers/SCOREP_Mpi_C_Request.c
+@@ -433,15 +433,15 @@ MPI_Test( MPI_Request* request,
+ 
+     if ( event_gen_active )
+     {
+-        SCOREP_MPI_EVENT_GEN_OFF();
++        // SCOREP_MPI_EVENT_GEN_OFF();
+ 
+         if ( event_gen_active_for_group )
+         {
+-            SCOREP_EnterWrappedRegion( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
++            // SCOREP_EnterWrappedRegion( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
+         }
+         else if ( SCOREP_IsUnwindingEnabled() )
+         {
+-            SCOREP_EnterWrapper( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
++            // SCOREP_EnterWrapper( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
+         }
+     }
+ 
+@@ -452,9 +452,9 @@ MPI_Test( MPI_Request* request,
+ 
+     scorep_mpi_save_request_array( request, 1 );
+ 
+-    SCOREP_ENTER_WRAPPED_REGION();
++    // SCOREP_ENTER_WRAPPED_REGION();
+     return_val = PMPI_Test( request, flag, status );
+-    SCOREP_EXIT_WRAPPED_REGION();
++    // SCOREP_EXIT_WRAPPED_REGION();
+ 
+     if ( event_gen_active_for_group && xtest_active )
+     {
+@@ -469,14 +469,14 @@ MPI_Test( MPI_Request* request,
+     {
+         if ( event_gen_active_for_group )
+         {
+-            SCOREP_ExitRegion( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
++            // SCOREP_ExitRegion( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
+         }
+         else if ( SCOREP_IsUnwindingEnabled() )
+         {
+-            SCOREP_ExitWrapper( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
++            // SCOREP_ExitWrapper( scorep_mpi_regions[ SCOREP_MPI_REGION__MPI_TEST ] );
+         }
+ 
+-        SCOREP_MPI_EVENT_GEN_ON();
++        // SCOREP_MPI_EVENT_GEN_ON();
+     }
+ 
+     SCOREP_IN_MEASUREMENT_DECREMENT();
