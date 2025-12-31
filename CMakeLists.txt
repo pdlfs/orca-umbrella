@@ -45,6 +45,11 @@ include (umbrella-main)
 #
 umbrella_opt_default (MERCURY_NA_INITIALLY_ON "sm")
 
+# Options for Parthenon stack
+umbrella_opt_default (PARTHENON_TAG "lb3bar")
+# kokkos 3.x is the last major version we have tested
+# retaining that for convenience
+umbrella_opt_default (KOKKOS_TAG "3.7.02")
 #
 # propagate the MPICXX setting to all cmake subprojects
 #
@@ -58,6 +63,8 @@ umbrella_opt_default (GOOGLETEST_TAG "v1.15.2")
 umbrella_opt_default (MON_TAG "main")
 umbrella_opt_default (MERCURY_REPO "https://github.com/chuckcranor/mercury.git")
 umbrella_opt_default (MERCURY_TAG "hg_rpcgen")
+umbrella_opt_default (DFTRACER_REPO "https://github.com/anku94/dftracer.git")
+umbrella_opt_default (DFTRACER_TAG "main")
 
 #
 # any additional cache variables we want to add that are not already
