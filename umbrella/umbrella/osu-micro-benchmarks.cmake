@@ -28,9 +28,9 @@ umbrella_defineopt (OSU_MICRO_BENCHMARKS_BASEURL
     "http://mvapich.cse.ohio-state.edu/download/mvapich"
     STRING "base url for osu benchmarks")
 umbrella_defineopt (OSU_MICRO_BENCHMARKS_URLFILE 
-    "osu-micro-benchmarks-5.6.1.tar.gz" STRING "benchmark tar file name")
+    "osu-micro-benchmarks-7.5.1.tar.gz" STRING "benchmark tar file name")
 umbrella_defineopt (OSU_MICRO_BENCHMARKS_URLMD5 
-    "0d2389d93ec2a0be60f21b0aecd14345" STRING "MD5 of tar file")
+    "a1bfbd2207954ca62ac75e3567492188" STRING "MD5 of tar file")
 umbrella_defineopt (OSU_MICRO_BENCHMARKS_REPO "" STRING "benchmark repo")
 umbrella_defineopt (OSU_MICRO_BENCHMARKS_TAG "master" 
     STRING "benchmark git tag")
