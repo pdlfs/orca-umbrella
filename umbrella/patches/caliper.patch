@@ -1,0 +1,33 @@
+diff --git a/src/services/recorder/Recorder.cpp b/src/services/recorder/Recorder.cpp
+index b4a389c1..728ff3f7 100644
+--- a/src/services/recorder/Recorder.cpp
++++ b/src/services/recorder/Recorder.cpp
+@@ -42,6 +42,7 @@ class Recorder
+ 
+         OutputStream stream;
+         stream.set_filename(filename.c_str(), *c, std::vector<Entry>(flush_info.begin(), flush_info.end()));
++        stream.set_mode(OutputStream::Mode::Append);
+ 
+         CaliWriter writer(stream);
+ 
+diff --git a/src/services/trace/Trace.cpp b/src/services/trace/Trace.cpp
+index e3ac45e0..12382e44 100644
+--- a/src/services/trace/Trace.cpp
++++ b/src/services/trace/Trace.cpp
+@@ -123,6 +123,16 @@ class Trace
+             {
+                 Log(1).stream() << m_channel.name() << ": trace: Trace buffer full, flushing.\n";
+                 c->flush_and_write(m_channel.body(), SnapshotView());
++                // Clear trace buffers after flushing
++                {
++                    std::lock_guard<std::mutex> gf(flush_lock);
++                    std::lock_guard<util::spinlock> g(tbuf_lock);
++                    for (TraceBuffer* t = tbuf_list; t; t = t->next) {
++                        t->stopped.store(true);
++                        t->chunks->reset();
++                        t->stopped.store(false);
++                    }
++                }
+                 return tbuf;
+             }
+ 
