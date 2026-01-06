@@ -1,3 +1,119 @@
+diff --git a/src/services/kokkos/KokkosProfilingSymbols.cpp b/src/services/kokkos/KokkosProfilingSymbols.cpp
+index 6125c42d..f125bc07 100644
+--- a/src/services/kokkos/KokkosProfilingSymbols.cpp
++++ b/src/services/kokkos/KokkosProfilingSymbols.cpp
+@@ -65,10 +65,10 @@ extern "C" void kokkosp_begin_parallel_scan(const char* name, const uint32_t dev
+     kokkosp_callbacks.kokkosp_begin_parallel_scan_callback(name, devID, kID);
+ }
+ 
+-extern "C" void kokkosp_begin_fence(const char* name, const uint32_t devID, uint64_t* kID)
+-{
+-    kokkosp_callbacks.kokkosp_begin_fence_callback(name, devID, kID);
+-}
++// extern "C" void kokkosp_begin_fence(const char* name, const uint32_t devID, uint64_t* kID)
++// {
++//     kokkosp_callbacks.kokkosp_begin_fence_callback(name, devID, kID);
++// }
+ 
+ extern "C" void kokkosp_end_parallel_for(const uint64_t kID)
+ {
+@@ -85,11 +85,11 @@ extern "C" void kokkosp_end_parallel_scan(const uint64_t kID)
+     kokkosp_callbacks.kokkosp_end_parallel_scan_callback(kID);
+ }
+ 
+-extern "C" void kokkosp_end_fence(const uint64_t kID)
+-{
+-    kokkosp_callbacks.kokkosp_end_fence_callback(kID);
+-}
+-
++// extern "C" void kokkosp_end_fence(const uint64_t kID)
++// {
++//     kokkosp_callbacks.kokkosp_end_fence_callback(kID);
++// }
++//
+ extern "C" void kokkosp_push_profile_region(char* regionName)
+ {
+     kokkosp_callbacks.kokkosp_push_region_callback(regionName);
+@@ -100,41 +100,41 @@ extern "C" void kokkosp_pop_profile_region()
+     kokkosp_callbacks.kokkosp_pop_region_callback();
+ }
+ 
+-extern "C" void kokkosp_allocate_data(
+-    const SpaceHandle space,
+-    const char*       label,
+-    const void* const ptr,
+-    const uint64_t    size
+-)
+-{
+-    kokkosp_callbacks.kokkosp_allocate_callback(space, label, ptr, size);
+-}
+-
+-extern "C" void kokkosp_deallocate_data(
+-    const SpaceHandle space,
+-    const char*       label,
+-    const void* const ptr,
+-    const uint64_t    size
+-)
+-{
+-    kokkosp_callbacks.kokkosp_deallocate_callback(space, label, ptr, size);
+-}
+-
+-extern "C" void kokkosp_begin_deep_copy(
+-    const SpaceHandle dst_handle,
+-    const char*       dst_name,
+-    const void*       dst_ptr,
+-    const SpaceHandle src_space,
+-    const char*       src_name,
+-    const void*       src_ptr,
+-    const uint64_t    size
+-)
+-{
+-    kokkosp_callbacks
+-        .kokkosp_begin_deep_copy_callback(dst_handle, dst_name, dst_ptr, src_space, src_name, src_ptr, size);
+-}
+-
+-extern "C" void kokkosp_end_deep_copy()
+-{
+-    kokkosp_callbacks.kokkosp_end_deep_copy_callback();
+-}
++// extern "C" void kokkosp_allocate_data(
++//     const SpaceHandle space,
++//     const char*       label,
++//     const void* const ptr,
++//     const uint64_t    size
++// )
++// {
++//     kokkosp_callbacks.kokkosp_allocate_callback(space, label, ptr, size);
++// }
++//
++// extern "C" void kokkosp_deallocate_data(
++//     const SpaceHandle space,
++//     const char*       label,
++//     const void* const ptr,
++//     const uint64_t    size
++// )
++// {
++//     kokkosp_callbacks.kokkosp_deallocate_callback(space, label, ptr, size);
++// }
++//
++// extern "C" void kokkosp_begin_deep_copy(
++//     const SpaceHandle dst_handle,
++//     const char*       dst_name,
++//     const void*       dst_ptr,
++//     const SpaceHandle src_space,
++//     const char*       src_name,
++//     const void*       src_ptr,
++//     const uint64_t    size
++// )
++// {
++//     kokkosp_callbacks
++//         .kokkosp_begin_deep_copy_callback(dst_handle, dst_name, dst_ptr, src_space, src_name, src_ptr, size);
++// }
++//
++// extern "C" void kokkosp_end_deep_copy()
++// {
++//     kokkosp_callbacks.kokkosp_end_deep_copy_callback();
++// }
 diff --git a/src/services/recorder/Recorder.cpp b/src/services/recorder/Recorder.cpp
 index b4a389c1..728ff3f7 100644
 --- a/src/services/recorder/Recorder.cpp
