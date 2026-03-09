@@ -17,7 +17,7 @@ if (NOT TARGET onetbb)
 #
 umbrella_defineopt (ONETBB_REPO "https://github.com/oneapi-src/oneTBB"
      STRING "onetbb GIT repository")
-umbrella_defineopt (ONETBB_TAG "master" STRING "onetbb GIT tag")
+umbrella_defineopt (ONETBB_TAG "v2022.0.0" STRING "onetbb GIT tag")
 umbrella_defineopt (ONETBB_TAR "onetbb-${ONETBB_TAG}.tar.gz"
      STRING "onetbb cache tar file")
 umbrella_buildtests(onetbb ONETBB_BUILDTESTS)
