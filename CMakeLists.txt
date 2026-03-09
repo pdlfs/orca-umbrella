@@ -74,9 +74,6 @@ umbrella_opt_default(ARROW_DEPENDENCY_SOURCE "SYSTEM")
 umbrella_opt_default(ARROW_FLIGHT ON)
 umbrella_opt_default(ARROW_FLIGHT_SQL ON)
 umbrella_opt_default(ARROW_PARQUET ON)
-umbrella_opt_default (BOOST_WITHLIBS 
-    "chrono,filesystem,program_options,random,system,thread,test")
-
 #
 # Actual repos we want to build
 #

@@ -31,8 +31,17 @@ umbrella_defineopt (BOOST_URLFILE "boost_1_74_0.tar.gz"
 umbrella_defineopt (BOOST_SHA256
     "afff36d392885120bcac079148c177d1f6f7730ec3d47233aa51b0afa4db94a5"
     STRING "sha256sum of tar file")
-umbrella_defineopt (BOOST_WITHLIBS "system,thread,date_time,program_options"
-    STRING "boost --with-libraries bootstrap.sh flag")
+
+#
+# boost libraries to build, staged by consumer
+#
+set (_boost_libs "")
+
+# default
+list(APPEND _boost_libs chrono filesystem program_options random system thread test)
+
+list(REMOVE_DUPLICATES _boost_libs)
+string(JOIN "," _boost_libs_str ${_boost_libs})
 
 #
 # generate parts of the ExternalProject_Add args...
@@ -46,11 +55,11 @@ umbrella_patchcheck (BOOST_PATCHCMD boost)
 # create boost target
 #
 ExternalProject_Add (boost ${BOOST_DOWNLOAD} ${BOOST_PATCHCMD}
-    CONFIGURE_COMMAND cd <SOURCE_DIR> && 
+    CONFIGURE_COMMAND cd <SOURCE_DIR> &&
         env ${UMBRELLA_COMP} ${UMBRELLA_CPPFLAGS} ${UMBRELLA_LDFLAGS}
-          ./bootstrap.sh --with-libraries=${BOOST_WITHLIBS}
+          ./bootstrap.sh --with-libraries=${_boost_libs_str}
                        --prefix=${CMAKE_INSTALL_PREFIX}
-    BUILD_COMMAND cd <SOURCE_DIR> && 
+    BUILD_COMMAND cd <SOURCE_DIR> &&
         ./b2 --prefix=${CMAKE_INSTALL_PREFIX} --build-dir=<BINARY_DIR> install
     INSTALL_COMMAND true
     UPDATE_COMMAND "")
