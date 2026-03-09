@@ -40,6 +40,9 @@ set (_boost_libs "")
 # default
 list(APPEND _boost_libs chrono filesystem program_options random system thread test)
 
+# dyninst
+list(APPEND _boost_libs atomic chrono date_time filesystem thread timer)
+
 list(REMOVE_DUPLICATES _boost_libs)
 string(JOIN "," _boost_libs_str ${_boost_libs})
 
