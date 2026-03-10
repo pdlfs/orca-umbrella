@@ -30,14 +30,9 @@ umbrella_download (YAML_CPP_DOWNLOAD yaml-cpp ${YAML_CPP_TAR}
 umbrella_patchcheck (YAML_CPP_PATCHCMD yaml-cpp)
 
 #
-# depends
-#
-include (umbrella/boost)
-
-#
 # create yaml-cpp target
 #
-ExternalProject_Add (yaml-cpp DEPENDS boost
+ExternalProject_Add (yaml-cpp
     ${YAML_CPP_DOWNLOAD} ${YAML_CPP_PATCHCMD}
     CMAKE_ARGS -DBUILD_SHARED_LIBS=ON
     CMAKE_CACHE_ARGS ${UMBRELLA_CMAKECACHE}
