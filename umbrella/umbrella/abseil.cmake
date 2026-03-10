@@ -20,9 +20,9 @@ umbrella_defineopt (ABSEIL_BASEURL "https://github.com/abseil/abseil-cpp"
                     STRING "Abseil base url")
 umbrella_defineopt (ABSEIL_URLDIR "archive/refs/tags"
                     STRING "Abseil subdir")
-umbrella_defineopt (ABSEIL_URLFILE "20211102.0.tar.gz"
+umbrella_defineopt (ABSEIL_URLFILE "20220623.0.tar.gz"
                     STRING "Abseil tar filename")
-umbrella_defineopt (ABSEIL_URLMD5 "bdca561519192543378b7cade101ec43"
+umbrella_defineopt (ABSEIL_URLMD5 "955b6faedf32ec2ce1b7725561d15618"
                     STRING "Abseil tar md5")
 
 #
