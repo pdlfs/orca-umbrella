@@ -34,11 +34,9 @@ umbrella_defineopt (BOOST_SHA256
 
 #
 # boost libraries to build, staged by consumer
+# thrift/yaml-cpp: headers only, no compiled libs needed
 #
 set (_boost_libs "")
-
-# default
-list(APPEND _boost_libs chrono filesystem program_options random system thread test)
 
 # dyninst
 list(APPEND _boost_libs atomic chrono date_time filesystem thread timer)
