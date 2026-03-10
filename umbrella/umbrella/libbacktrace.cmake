@@ -40,8 +40,8 @@ ExternalProject_Add (libbacktrace ${LIBBACKTRACE_DOWNLOAD} ${LIBBACKTRACE_PATCHC
                       --prefix=${CMAKE_INSTALL_PREFIX}
                       --enable-shared
                       --with-pic
-    BUILD_COMMAND /usr/bin/make -j16
-    INSTALL_COMMAND /usr/bin/make install
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
     UPDATE_COMMAND "")
 
 endif (NOT TARGET libbacktrace)

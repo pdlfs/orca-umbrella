@@ -40,8 +40,8 @@ ExternalProject_Add (elfutils ${ELFUTILS_DOWNLOAD} ${ELFUTILS_PATCHCMD}
                       --prefix=${CMAKE_INSTALL_PREFIX}
                       --disable-debuginfod
                       --disable-libdebuginfod
-    BUILD_COMMAND /usr/bin/make -j16
-    INSTALL_COMMAND /usr/bin/make install
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
     UPDATE_COMMAND "")
 
 endif (NOT TARGET elfutils)

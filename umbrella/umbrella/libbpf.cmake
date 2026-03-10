@@ -41,12 +41,12 @@ include (umbrella/elfutils)
 ExternalProject_Add (libbpf DEPENDS zlib elfutils
     ${LIBBPF_DOWNLOAD} ${LIBBPF_PATCHCMD}
     CONFIGURE_COMMAND ""
-    BUILD_COMMAND /usr/bin/make -C <SOURCE_DIR>/src -j16
+    BUILD_COMMAND $(MAKE) -C <SOURCE_DIR>/src
         OBJDIR=<BINARY_DIR>
         PREFIX=${CMAKE_INSTALL_PREFIX}
         DESTDIR=
         PKG_CONFIG_PATH=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig
-    INSTALL_COMMAND /usr/bin/make -C <SOURCE_DIR>/src install
+    INSTALL_COMMAND $(MAKE) -C <SOURCE_DIR>/src install
         OBJDIR=<BINARY_DIR>
         PREFIX=${CMAKE_INSTALL_PREFIX}
         DESTDIR=

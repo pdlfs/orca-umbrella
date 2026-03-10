@@ -44,8 +44,8 @@ ExternalProject_Add (libiberty ${LIBIBERTY_DOWNLOAD} ${LIBIBERTY_PATCHCMD}
                       --prefix=${CMAKE_INSTALL_PREFIX}
                       --enable-install-libiberty
                       "CFLAGS=-g -O2 -fPIC"
-    BUILD_COMMAND /usr/bin/make -j16
-    INSTALL_COMMAND /usr/bin/make install
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
     UPDATE_COMMAND "")
 
 endif (NOT TARGET libiberty)
