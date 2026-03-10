@@ -18,7 +18,7 @@ if (NOT TARGET gflags)
 umbrella_defineopt (GFLAGS_REPO
      "https://github.com/gflags/gflags.git"
      STRING "gflags GIT repository")
-umbrella_defineopt (GFLAGS_TAG "master" STRING "gflags GIT tag")
+umbrella_defineopt (GFLAGS_TAG "main" STRING "gflags GIT tag")
 umbrella_defineopt (GFLAGS_TAR "gflags-${GFLAGS_TAG}.tar.gz"
      STRING "gflags cache tar file")
 umbrella_buildtests(gflags GFLAGS_BUILDTESTS)

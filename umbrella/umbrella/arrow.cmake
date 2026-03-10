@@ -77,7 +77,8 @@ if (NOT ARROW_DEPENDENCY_SOURCE STREQUAL "BUNDLED")
   if (ARROW_FLIGHT OR ARROW_FLIGHT_SQL)
     message (STATUS "Arrow: flight enabled, building grpc")
 
-    list (APPEND ARROW_DEPENDS grpc)
+    list (APPEND ARROW_DEPENDS grpc gflags)
+    include (umbrella/gflags)
     include (umbrella/grpc)
   endif (ARROW_FLIGHT OR ARROW_FLIGHT_SQL)
 
