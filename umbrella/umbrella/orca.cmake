@@ -17,6 +17,7 @@ umbrella_defineopt (ORCA_REPO "https://github.com/pdlfs/orca.git"
 umbrella_defineopt (ORCA_TAG "main" STRING "ORCA GIT tag")
 umbrella_defineopt (ORCA_TAR "orca-${ORCA_TAG}.tar.gz"
      STRING "ORCA cache tar file")
+umbrella_buildtests(orca ORCA_BUILDTESTS)
 
 #
 # generate parts of the ExternalProject_Add args...
@@ -37,14 +38,16 @@ include (umbrella/googletest)
 include (umbrella/mercury)
 include (umbrella/arrow)
 include (umbrella/yaml-cpp)
+include (umbrella/duckdb)
 
 #
 # create orca target
 #
 ExternalProject_Add (orca
-    DEPENDS googletest mercury arrow yaml-cpp
+    DEPENDS googletest mercury arrow yaml-cpp duckdb
     ${ORCA_DOWNLOAD} ${ORCA_PATCHCMD}
     CMAKE_ARGS -DCMAKE_PREFIX_PATH=${UMBRELLA_PREFIX_PATH}
+               -DORCA_BUILD_TESTING=${ORCA_BUILDTESTS}
     CMAKE_CACHE_ARGS ${UMBRELLA_CMAKECACHE}
     UPDATE_COMMAND ""
 )
