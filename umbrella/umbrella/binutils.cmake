@@ -33,17 +33,18 @@ umbrella_patchcheck (BINUTILS_PATCHCMD binutils)
 #
 # create binutils target
 # configure with --enable-shared to get shared libbfd
-# only build bfd, binutils, and gas (not all binutils tools)
+# only build bfd; this module exists to provide libbfd
 #
 ExternalProject_Add (binutils ${BINUTILS_DOWNLOAD} ${BINUTILS_PATCHCMD}
     CONFIGURE_COMMAND <SOURCE_DIR>/configure ${UMBRELLA_COMP}
                       ${UMBRELLA_CPPFLAGS} ${UMBRELLA_LDFLAGS}
+                      MAKEINFO=true  # skip Texinfo docs by replacing makeinfo with no-op true
                       --prefix=${CMAKE_INSTALL_PREFIX}
                       --enable-shared
                       --disable-nls
                       --disable-werror
-    BUILD_COMMAND $(MAKE) all-bfd all-binutils all-gas
-    INSTALL_COMMAND $(MAKE) install-bfd
+    BUILD_COMMAND $(MAKE) MAKEINFO=true all-bfd
+    INSTALL_COMMAND $(MAKE) MAKEINFO=true install-bfd
     UPDATE_COMMAND "")
 
 endif (NOT TARGET binutils)
