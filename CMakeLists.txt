@@ -34,7 +34,7 @@ project (mon-umbrella C CXX)
 #
 # configure umbrella and pull in the main routines
 #
-set (UMBRELLA_MPI 1)             # amr-umbrella uses MPI
+set (UMBRELLA_MPI 1)             # orca-umbrella uses MPI
 set (UMBRELLA_HAS_GNULIBDIRS 1)  # our pkgs use cmake GNUInstallDirs
 set (UMBRELLA_CXX_STANDARD 17)   # default C++ standard
 
@@ -47,6 +47,7 @@ umbrella_opt_default (MERCURY_NA_INITIALLY_ON "sm")
 
 # Options for Parthenon stack
 umbrella_opt_default (PARTHENON_TAG "lb3bar")
+umbrella_opt_default (PHOEBUS_TAG "lb")
 # kokkos 3.x is the last major version we have tested
 # retaining that for convenience
 umbrella_opt_default (KOKKOS_TAG "3.7.02")
@@ -60,7 +61,6 @@ list(APPEND UMBRELLA_CMAKECACHE -DMPI_CXX_SKIP_MPICXX:BOOL=${MPI_CXX_SKIP_MPICXX
 # set git tags to the versions we want to stick to by default...
 #
 umbrella_opt_default (GOOGLETEST_TAG "v1.15.2")
-umbrella_opt_default (MON_TAG "main")
 umbrella_opt_default (MERCURY_REPO "https://github.com/chuckcranor/mercury.git")
 umbrella_opt_default (MERCURY_TAG "hg_rpcgen")
 umbrella_opt_default (DFTRACER_REPO "https://github.com/anku94/dftracer.git")
