@@ -32,8 +32,9 @@ umbrella_patchcheck (PARTHENON_PATCHCMD parthenon)
 #
 # depends
 #
-set (PARTHENON_DEPENDS amr-tools)
+set (PARTHENON_DEPENDS amr-tools orca)
 include (umbrella/amr-tools)
+include (umbrella/orca)
 
 if (NOT PARTHENON_DISABLE_HDF5)
     umbrella_opt_default (HDF5_TAG "hdf5_1_12_2")
