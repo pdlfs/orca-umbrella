@@ -45,7 +45,9 @@ include (umbrella/gotcha)
 ExternalProject_Add (scorep
     DEPENDS ${SCOREP_DEPENDS}
     ${SCOREP_DOWNLOAD} ${SCOREP_PATCHCMD}
-    CONFIGURE_COMMAND <SOURCE_DIR>/configure ${UMBRELLA_MPICOMP}
+    # Passing UMBRELLA_MPICOMP leads to it setting mpicc=mpicc on some systems?
+    CONFIGURE_COMMAND <SOURCE_DIR>/configure ${UMBRELLA_COMP}
+                      MPICC=${MPI_C_COMPILER} MPICXX=${MPI_CXX_COMPILER}
                       ${UMBRELLA_CPPFLAGS} ${UMBRELLA_LDFLAGS}
                       --prefix=${CMAKE_INSTALL_PREFIX}
                       --with-libbfd=${CMAKE_INSTALL_PREFIX}
