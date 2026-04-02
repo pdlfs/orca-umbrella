@@ -18,10 +18,10 @@ if (NOT TARGET mpich)
 #
 umbrella_defineopt (MPICH_BASEURL
     "http://www.mpich.org/static/downloads" STRING "base url for mpich")
-umbrella_defineopt (MPICH_URLDIR "3.2" STRING "mpich subdir")
-umbrella_defineopt (MPICH_URLFILE "mpich-3.2.tar.gz"
+umbrella_defineopt (MPICH_URLDIR "4.2.3" STRING "mpich subdir")
+umbrella_defineopt (MPICH_URLFILE "mpich-4.2.3.tar.gz"
     STRING "mpich tar file name")
-umbrella_defineopt (MPICH_URLMD5 "f414cfa77099cd1fa1a5ae4e22db508a"
+umbrella_defineopt (MPICH_URLMD5 "b0c2a9690ce5325d69b7022219d94f64"
     STRING "MD5 of tar file")
 
 #
