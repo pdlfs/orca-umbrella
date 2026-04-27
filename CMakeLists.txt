@@ -50,7 +50,8 @@ umbrella_opt_default (PARTHENON_TAG "lb3bar")
 umbrella_opt_default (PHOEBUS_TAG "lb")
 # kokkos 3.x is the last major version we have tested
 # retaining that for convenience
-umbrella_opt_default (KOKKOS_TAG "3.7.02")
+# umbrella_opt_default (KOKKOS_TAG "3.7.02")
+
 #
 # propagate the MPICXX setting to all cmake subprojects
 #
@@ -74,13 +75,20 @@ umbrella_opt_default(ARROW_DEPENDENCY_SOURCE "SYSTEM")
 umbrella_opt_default(ARROW_FLIGHT ON)
 umbrella_opt_default(ARROW_FLIGHT_SQL ON)
 umbrella_opt_default(ARROW_PARQUET ON)
+
+# For Parthenon/Phoebus
+umbrella_opt_default(HDF5_TAG "hdf5_1_12_2")
+umbrella_opt_default(HDF5_ENABLE_PARALLEL "ON")
+
 #
 # Actual repos we want to build
 #
-include (umbrella/snappy)
-include (umbrella/googletest)
-include (umbrella/arrow)
-include (umbrella/mercury)
-include (umbrella/duckdb)
-include (umbrella/yaml-cpp)
+# include (umbrella/snappy)
+# include (umbrella/googletest)
+# include (umbrella/arrow)
+# include (umbrella/mercury)
+# include (umbrella/duckdb)
+# include (umbrella/yaml-cpp)
 # include (umbrella/orca)
+include (umbrella/phoebus)
+# include (umbrella/parthenon)
