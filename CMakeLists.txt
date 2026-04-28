@@ -83,12 +83,6 @@ umbrella_opt_default(HDF5_ENABLE_PARALLEL "ON")
 #
 # Actual repos we want to build
 #
-# include (umbrella/snappy)
-# include (umbrella/googletest)
-# include (umbrella/arrow)
-# include (umbrella/mercury)
-# include (umbrella/duckdb)
-# include (umbrella/yaml-cpp)
-# include (umbrella/orca)
+# Phoebus depends on ORCA and includes it, just being explicit
+include (umbrella/orca)
 include (umbrella/phoebus)
-# include (umbrella/parthenon)
