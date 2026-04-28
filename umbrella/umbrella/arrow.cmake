@@ -64,13 +64,17 @@ set(ARROW_CMAKE_ARGS
   -DARROW_FLIGHT_SQL=${ARROW_FLIGHT_SQL} # need flightsql for server
   -DBUILD_SHARED_LIBS=ON
   -DARROW_PARQUET=${ARROW_PARQUET}
+  -DARROW_WITH_SNAPPY=ON
 )
 
 #
 # set dependencies
 #
-set (ARROW_DEPENDS xsimd)
+# snappy is optional for Arrow, but mandatory for ORCA currently
+# TODO: check available compressions in ORCA and fallback if snappy is not available
+set (ARROW_DEPENDS xsimd snappy)
 include (umbrella/xsimd)
+include (umbrella/snappy)
 
 # Build umbrella dependencies if source is not BUNDLED
 if (NOT ARROW_DEPENDENCY_SOURCE STREQUAL "BUNDLED")
