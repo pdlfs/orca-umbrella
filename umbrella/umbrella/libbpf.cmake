@@ -44,11 +44,15 @@ ExternalProject_Add (libbpf DEPENDS zlib elfutils
     BUILD_COMMAND $(MAKE) -C <SOURCE_DIR>/src
         OBJDIR=<BINARY_DIR>
         PREFIX=${CMAKE_INSTALL_PREFIX}
+        # By default libbpf uses /lib64, which breaks umbrella's pkgconfig
+        LIBDIR=${CMAKE_INSTALL_PREFIX}/lib
         DESTDIR=
         PKG_CONFIG_PATH=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig
     INSTALL_COMMAND $(MAKE) -C <SOURCE_DIR>/src install
         OBJDIR=<BINARY_DIR>
         PREFIX=${CMAKE_INSTALL_PREFIX}
+        # By default libbpf uses /lib64, which breaks umbrella's pkgconfig
+        LIBDIR=${CMAKE_INSTALL_PREFIX}/lib
         DESTDIR=
         PKG_CONFIG_PATH=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig
     UPDATE_COMMAND "")
