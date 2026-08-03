@@ -1,4 +1,4 @@
-# haven't tested with a version below this, need at least 3.16 for arrow
+# have not tested with cmake < v3.22, arrow needs >= v3.16
 cmake_minimum_required (VERSION 3.22)
 
 #
@@ -29,7 +29,7 @@ set (MPI_CXX_SKIP_MPICXX ON CACHE BOOL "True if MPICXX should be skipped")
 # using a compiler that may have been passed in via the command line
 # or by using environment vars.
 #
-project (mon-umbrella C CXX)
+project (orca-umbrella C CXX)
 
 #
 # configure umbrella and pull in the main routines
@@ -49,8 +49,10 @@ umbrella_opt_default (MERCURY_NA_INITIALLY_ON "sm")
 umbrella_opt_default (PARTHENON_TAG "lb3bar")
 umbrella_opt_default (PHOEBUS_TAG "lb")
 # kokkos 3.x is the last major version we have tested
-# retaining that for convenience
+# retaining that for convenience (TODO: check if needed)
 # umbrella_opt_default (KOKKOS_TAG "3.7.02")
+umbrella_opt_default(HDF5_TAG "hdf5_1_12_2")
+umbrella_opt_default(HDF5_ENABLE_PARALLEL "ON")
 
 #
 # propagate the MPICXX setting to all cmake subprojects
@@ -76,13 +78,25 @@ umbrella_opt_default(ARROW_FLIGHT ON)
 umbrella_opt_default(ARROW_FLIGHT_SQL ON)
 umbrella_opt_default(ARROW_PARQUET ON)
 
-# For Parthenon/Phoebus
-umbrella_opt_default(HDF5_TAG "hdf5_1_12_2")
-umbrella_opt_default(HDF5_ENABLE_PARALLEL "ON")
+#
+# Actual repos we want to build. Package combos are selected via UMBRELLA_PROFILE variants
+# - DEPS: Dependencies needed to build ORCA. Useful for an out-of-tree ORCA build.
+# - FULL: Builds orca + orca-utils (deps are pulled automatically)
+# - ADAE: FULL + ORCA-augmented AMR code (phoebus) for AD/AE and testing
+# - EVAL: FULL + phoebus + tracers (dftracer, caliper, scorep). TAU needs to be built manually outside.
+# - XTRA: FULL + packages for experimental ORCA utils (libunwind, dyninst, libbpf)
+#
+set (UMBRELLA_PROFILE "FULL" CACHE STRING "Build profile: DEPS FULL ADAE EVAL XTRA")
 
-#
-# Actual repos we want to build
-#
-# Phoebus depends on ORCA and includes it, just being explicit
-include (umbrella/orca)
-include (umbrella/phoebus)
+set (UMBRELLA_PKGS_DEPS googletest mercury arrow yaml-cpp duckdb)
+set (UMBRELLA_PKGS_FULL orca orca-utils)
+set (UMBRELLA_PKGS_ADAE ${UMBRELLA_PKGS_FULL} phoebus)
+set (UMBRELLA_PKGS_EVAL ${UMBRELLA_PKGS_ADAE} dftracer caliper scorep)
+set (UMBRELLA_PKGS_XTRA ${UMBRELLA_PKGS_FULL} libunwind dyninst libbpf)
+
+set (UMBRELLA_PKGS_ACTIVE ${UMBRELLA_PKGS_${UMBRELLA_PROFILE}})
+message (INFO "Building following packages + dependencies: ${UMBRELLA_PKGS_ACTIVE}")
+
+foreach (pkg IN LISTS UMBRELLA_PKGS_ACTIVE)
+    include (umbrella/${pkg})
+endforeach()
