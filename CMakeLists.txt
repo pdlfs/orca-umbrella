@@ -83,7 +83,9 @@ umbrella_opt_default(ARROW_PARQUET ON)
 # - DEPS: Dependencies needed to build ORCA. Useful for an out-of-tree ORCA build.
 # - FULL: Builds orca + orca-utils (deps are pulled automatically)
 # - ADAE: FULL + ORCA-augmented AMR code (phoebus) for AD/AE and testing
-# - EVAL: FULL + phoebus + tracers (dftracer, caliper, scorep). TAU needs to be built manually outside.
+# - EVAL: FULL + phoebus + tracers (dftracer, caliper, scorep). 
+#   + TAU needs to be built manually as its build system builds in-tree.
+#   + Jul 2026: dftracer is removed as upstream dependencies seem to have gone offline.
 # - XTRA: FULL + packages for experimental ORCA utils (libunwind, dyninst, libbpf)
 #
 set (UMBRELLA_PROFILE "FULL" CACHE STRING "Build profile: DEPS FULL ADAE EVAL XTRA")
@@ -91,7 +93,7 @@ set (UMBRELLA_PROFILE "FULL" CACHE STRING "Build profile: DEPS FULL ADAE EVAL XT
 set (UMBRELLA_PKGS_DEPS googletest mercury arrow yaml-cpp duckdb)
 set (UMBRELLA_PKGS_FULL orca orca-utils)
 set (UMBRELLA_PKGS_ADAE ${UMBRELLA_PKGS_FULL} phoebus)
-set (UMBRELLA_PKGS_EVAL ${UMBRELLA_PKGS_ADAE} dftracer caliper scorep)
+set (UMBRELLA_PKGS_EVAL ${UMBRELLA_PKGS_ADAE} caliper scorep)
 set (UMBRELLA_PKGS_XTRA ${UMBRELLA_PKGS_FULL} libunwind dyninst libbpf)
 
 set (UMBRELLA_PKGS_ACTIVE ${UMBRELLA_PKGS_${UMBRELLA_PROFILE}})
