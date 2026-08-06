@@ -221,7 +221,7 @@ prompt_umbrella_profile() {
     message "Select umbrella build profile"
     echo "  1. DEPS - Dependencies needed to build ORCA out-of-tree"
     echo "  2. FULL - ORCA + ORCA utils"
-    echo "  3. ADAE - FULL + AD/AE AMR code and demo artifacts"
+    echo "  3. ADAE - FULL + ORCA-enabled AMR code and guided demo"
     echo "  4. EVAL - ADAE + tracing/evaluation packages"
     echo "  5. XTRA - FULL + experimental ORCA utility packages"
     echo
