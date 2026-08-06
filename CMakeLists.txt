@@ -45,6 +45,10 @@ include (umbrella-main)
 #
 umbrella_opt_default (MERCURY_NA_INITIALLY_ON "sm")
 
+# We need to make ORCA force-depend on Kokkos hooks
+# for the Phoebus demo even though it is optional.
+umbrella_opt_default (ORCA_KOKKOS_HOOKS ON)
+
 # Options for Parthenon stack
 umbrella_opt_default (PARTHENON_TAG "lb3bar")
 umbrella_opt_default (PHOEBUS_TAG "lb")

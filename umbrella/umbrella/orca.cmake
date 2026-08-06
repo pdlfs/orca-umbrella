@@ -40,11 +40,17 @@ include (umbrella/arrow)
 include (umbrella/yaml-cpp)
 include (umbrella/duckdb)
 
+set (ORCA_DEPENDS googletest mercury arrow yaml-cpp duckdb)
+if (ORCA_KOKKOS_HOOKS)
+    include (umbrella/kokkos)
+    list (APPEND ORCA_DEPENDS kokkos)
+endif ()
+
 #
 # create orca target
 #
 ExternalProject_Add (orca
-    DEPENDS googletest mercury arrow yaml-cpp duckdb
+    DEPENDS ${ORCA_DEPENDS}
     ${ORCA_DOWNLOAD} ${ORCA_PATCHCMD}
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${UMBRELLA_PKGCFGPATH}
         ${CMAKE_COMMAND} -S <SOURCE_DIR> -B <BINARY_DIR>
