@@ -111,7 +111,8 @@ setup_python_polars_tmpenv() {
 
     message "Creating temporary Python environment: ${venv_dir}"
     "${uv_bin}" venv "${venv_dir}"
-    "${uv_bin}" pip install --python "${venv_dir}/bin/python" polars
+    # Use rtcompat variant for compatibility with older CPUs.
+    "${uv_bin}" pip install --python "${venv_dir}/bin/python" 'polars[rtcompat]'
 
     PATH="${venv_dir}/bin:${PATH}"
     export PATH
