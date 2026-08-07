@@ -52,9 +52,6 @@ umbrella_opt_default (ORCA_KOKKOS_HOOKS ON)
 # Options for Parthenon stack
 umbrella_opt_default (PARTHENON_TAG "lb3bar")
 umbrella_opt_default (PHOEBUS_TAG "lb")
-# kokkos 3.x is the last major version we have tested
-# retaining that for convenience (TODO: check if needed)
-# umbrella_opt_default (KOKKOS_TAG "3.7.02")
 umbrella_opt_default(HDF5_TAG "hdf5_1_12_2")
 umbrella_opt_default(HDF5_ENABLE_PARALLEL "ON")
 

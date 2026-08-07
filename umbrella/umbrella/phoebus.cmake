@@ -34,8 +34,7 @@ umbrella_patchcheck (PHOEBUS_PATCHCMD phoebus)
 #
 # phoebus's own CMakeLists forces PARTHENON_IMPORT_KOKKOS=ON, so parthenon
 # (built as a submodule by phoebus) needs an externally installed Kokkos.
-# Pin to 4.0.01 (minimum 4.x) and pre-build it via umbrella/kokkos.
-umbrella_opt_default (KOKKOS_TAG "4.0.01")
+# Pre-build it via umbrella/kokkos.
 include (umbrella/hdf5)
 include (umbrella/kokkos)
 # Parthenon now depends on ORCA, as it has been linked with orca-client
