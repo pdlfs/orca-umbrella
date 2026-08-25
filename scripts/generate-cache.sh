@@ -80,6 +80,7 @@ cache_one_prefix() {
     local src_dir
     local tar_name
     local tar_path
+    local -a package_excludes=()
 
     [ -d "$prefix_dir" ] || die "Prefix dir not found: $prefix_dir"
 
@@ -93,6 +94,10 @@ cache_one_prefix() {
 
     mkdir -p "$CACHE_DIR"
 
+    if [ "$dep_name" = "orca-utils" ]; then
+        package_excludes+=(--exclude='orca-utils/ext')
+    fi
+
     message "Caching ${dep_name}: ${src_dir} -> ${tar_path}"
     tar \
         --exclude='.git' \
@@ -100,6 +105,7 @@ cache_one_prefix() {
         --exclude='.gitmodules' \
         --exclude='__pycache__' \
         --exclude='*.pyc' \
+        "${package_excludes[@]}" \
         -czf "$tar_path" \
         -C "$(dirname "$src_dir")" "$(basename "$src_dir")"
 }

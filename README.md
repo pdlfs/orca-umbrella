@@ -9,6 +9,12 @@ This package is designed for quickly setting up ORCA on computing platforms rang
 
 ORCA is a real-time observability and control system for HPC applications. ORCA is implemented in C++ and Rust, and uses Apache DataFusion internally for in-situ SQL-style processing. Build profiles select which parts of the ORCA stack and supporting applications are installed.
 
+## Archived artifact
+
+The immutable SC26 AD/AE artifact is archived on Zenodo:
+[https://doi.org/10.5281/zenodo.22090146](https://doi.org/10.5281/zenodo.22090146).
+The GitHub repository may contain later development changes.
+
 ## Modules
 
 The list of primary modules used by orca-umbrella is selected in `CMakeLists.txt` through `UMBRELLA_PROFILE`. The corresponding package include files live under `umbrella/umbrella`.
