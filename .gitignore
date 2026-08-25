@@ -1,2 +1,3 @@
 build/*
 install/*
+cache.0/*.tar.gz

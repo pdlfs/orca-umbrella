@@ -2,8 +2,6 @@
 
 set -eu
 
-CACHE_DIR=cache.0
-
 # message: print an info line
 message() {
     echo "-INFO- $@"
@@ -33,6 +31,9 @@ detect_umbrella_root() {
 
     return 1
 }
+
+UMBRELLA_ROOT=$(detect_umbrella_root) || die "Could not detect orca-umbrella root from script path"
+CACHE_DIR="$UMBRELLA_ROOT/cache.0"
 
 # prompt_build_dir: read and validate build directory
 prompt_build_dir() {
@@ -122,13 +123,88 @@ cache_all_prefixes() {
     done
 }
 
-# main: generate cache.0 from a user-supplied build directory
-main() {
-    UMBRELLA_ROOT=$(detect_umbrella_root) || die "Could not detect orca-umbrella root from script path"
-    CACHE_DIR="$UMBRELLA_ROOT/cache.0"
-
+# run_generate_cache: generate cache.0 from a user-supplied build directory
+run_generate_cache() {
     prompt_build_dir
     cache_all_prefixes
 }
 
-main "$@"
+# run_upload_release: package cache.0 with committed sources and publish a release
+run_upload_release() {
+    local version=$1
+
+    # Validate release inputs.
+    [[ "$version" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]] || \
+        die "Version must be semantic, for example: v1.0.1"
+    command -v gh >/dev/null 2>&1 || die "gh CLI not found"
+    command -v sha256sum >/dev/null 2>&1 || die "sha256sum not found"
+    [ -d "$CACHE_DIR" ] || die "Cache dir not found: $CACHE_DIR"
+    find "$CACHE_DIR" -mindepth 1 -print -quit | grep -q . || die "Cache dir is empty: $CACHE_DIR"
+
+    # Require the release commit to be clean.
+    git -C "$UMBRELLA_ROOT" diff --quiet || die "Tracked worktree changes must be committed before upload"
+    git -C "$UMBRELLA_ROOT" diff --cached --quiet || die "Staged changes must be committed before upload"
+
+    local head=$(git -C "$UMBRELLA_ROOT" rev-parse HEAD)
+
+    # Name release outputs from the requested version.
+    local artifact_name="orca-umbrella-${version}"
+    local archive_name="${artifact_name}.tar.gz"
+    local checksum_name="${archive_name}.sha256"
+    local output_dir=$(dirname "$UMBRELLA_ROOT")
+    local archive_path="$output_dir/$archive_name"
+    local checksum_path="$output_dir/$checksum_name"
+
+    # Package committed sources with the generated cache.
+    local staging_dir=$(mktemp -d)
+    trap 'rm -rf "$staging_dir"' RETURN
+
+    mkdir -p "$staging_dir/$artifact_name"
+    git -C "$UMBRELLA_ROOT" archive HEAD | tar -xf - -C "$staging_dir/$artifact_name"
+    cp -a "$CACHE_DIR/." "$staging_dir/$artifact_name/cache.0/"
+
+    message "Packaging release: $archive_path"
+    tar -czf "$archive_path" -C "$staging_dir" "$artifact_name"
+    (
+        cd "$output_dir"
+        sha256sum "$archive_name" > "$checksum_name"
+    )
+
+    # Publish the archive and checksum under the matching release tag.
+    message "Uploading GitHub release: $version"
+    gh release create "$version" \
+        "$archive_path" \
+        "$checksum_path" \
+        --repo "$(git -C "$UMBRELLA_ROOT" remote get-url origin)" \
+        --target "$head" \
+        --title "$artifact_name" \
+        --notes "ORCA SC26 AD/AE artifact $version."
+}
+
+# usage: print command-line help
+usage() {
+    cat <<EOF
+Usage:
+  $0 --cache
+  $0 --upload VERSION
+EOF
+}
+
+# Dispatch cache generation and release upload independently.
+case "${1:-}" in
+    --cache)
+        [ "$#" -eq 1 ] || die "--cache takes no arguments"
+        run_generate_cache
+        ;;
+    --upload)
+        [ "$#" -eq 2 ] || die "--upload requires one VERSION argument"
+        run_upload_release "$2"
+        ;;
+    -h|--help)
+        usage
+        ;;
+    *)
+        usage >&2
+        exit 1
+        ;;
+esac
