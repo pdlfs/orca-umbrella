@@ -37,7 +37,6 @@ include (umbrella/amr-tools)
 include (umbrella/orca)
 
 if (NOT PARTHENON_DISABLE_HDF5)
-    umbrella_opt_default (HDF5_TAG "hdf5_1_12_2")
     umbrella_opt_default (HDF5_ENABLE_PARALLEL "ON")
     set (PARTHENON_DEPENDS ${PARTHENON_DEPENDS} hdf5)
     include (umbrella/hdf5)

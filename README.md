@@ -72,10 +72,26 @@ A guided ORCA tour is available when the selected profile installs Phoebus.
 <install-prefix>/scripts/run_orca_demo.sh
 ```
 
-## Cache
+## Using `cache.0`
 
-The umbrella build system can use a local cache directory of source tarballs. Distribution cache files may be placed under `cache.0/` and copied or linked into `cache/` before configuring a build.
-`./scripts/generate-cache.sh` can populate `cache.0/` from an existing umbrella build tree.
+The source archives provided in `cache.0/` can be used instead of fetching the
+corresponding repositories and release archives. Activate them after cloning or
+extracting `orca-umbrella`, but before configuring the build:
+
+```bash
+mkdir -p cache
+cp cache.0/* cache/
+
+# Confirm that the source archives are available to the build.
+ls cache
+```
+
+CMake will report the detected tar cache directory during configuration and use
+matching archives from `cache/`. Cargo-managed Rust dependencies are not included
+and still require internet access.
+
+`./scripts/generate-cache.sh` can populate `cache.0/` from an existing umbrella
+build tree.
 
 ---
 

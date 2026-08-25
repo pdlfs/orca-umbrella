@@ -7,7 +7,8 @@
 # config:
 #  GRPC_BASEURL - base url of gRPC
 #  GRPC_URLDIR  - subdir in base where util-linux lives
-#  GRPC_URLFILE - tar file within urldir
+#  GRPC_TAG     - upstream release tag
+#  GRPC_TAR     - local cache tar file
 #  GRPC_URLMD5  - md5 of tar file
 #
 
@@ -20,16 +21,18 @@ umbrella_defineopt (GRPC_BASEURL "https://github.com/grpc/grpc"
                     STRING "gRPC base url")
 umbrella_defineopt (GRPC_URLDIR "archive/refs/tags"
                     STRING "gRPC url dir")
-umbrella_defineopt (GRPC_URLFILE "v1.46.3.tar.gz"
-                    STRING "gRPC url file")
+umbrella_defineopt (GRPC_TAG "v1.46.3"
+                    STRING "gRPC release tag")
+umbrella_defineopt (GRPC_TAR "grpc-${GRPC_TAG}.tar.gz"
+                    STRING "gRPC cache tar file")
 umbrella_defineopt (GRPC_URLMD5 "fa4b4aa04ba22841b29ffe920f0b133f"
                     STRING "gRPC url md5")
 #
 # generate parts of the ExternalProject_Add args...
 #
 umbrella_download (GRPC_DOWNLOAD grpc
-                   ${GRPC_URLFILE}
-                   URL "${GRPC_BASEURL}/${GRPC_URLDIR}/${GRPC_URLFILE}"
+                   ${GRPC_TAR}
+                   URL "${GRPC_BASEURL}/${GRPC_URLDIR}/${GRPC_TAG}.tar.gz"
                    URL_MD5 ${GRPC_URLMD5})
 umbrella_patchcheck (GRPC_PATCHCMD grpc)
 

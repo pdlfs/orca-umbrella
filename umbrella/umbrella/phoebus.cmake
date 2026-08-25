@@ -14,7 +14,7 @@ if (NOT TARGET phoebus)
 
 umbrella_defineopt (PHOEBUS_REPO "https://github.com/anku94/phoebus.git"
      STRING "PHOEBUS GIT repository")
-umbrella_defineopt (PHOEBUS_TAG "main" STRING "PHOEBUS GIT tag")
+umbrella_defineopt (PHOEBUS_TAG "lb" STRING "PHOEBUS GIT tag")
 umbrella_defineopt (PHOEBUS_TAR "phoebus-${PHOEBUS_TAG}.tar.gz"
      STRING "PHOEBUS cache tar file")
 #

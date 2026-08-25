@@ -7,7 +7,8 @@
 # config:
 #  ABSEIL_BASEURL - base url of abseil
 #  ABSEIL_URLDIR  - subdir in base where util-linux lives
-#  ABSEIL_URLFILE - tar file within urldir
+#  ABSEIL_TAG     - upstream release tag
+#  ABSEIL_TAR     - local cache tar file
 #  ABSEIL_URLMD5  - md5 of tar file
 #
 
@@ -20,8 +21,10 @@ umbrella_defineopt (ABSEIL_BASEURL "https://github.com/abseil/abseil-cpp"
                     STRING "Abseil base url")
 umbrella_defineopt (ABSEIL_URLDIR "archive/refs/tags"
                     STRING "Abseil subdir")
-umbrella_defineopt (ABSEIL_URLFILE "20220623.0.tar.gz"
-                    STRING "Abseil tar filename")
+umbrella_defineopt (ABSEIL_TAG "20220623.0"
+                    STRING "Abseil release tag")
+umbrella_defineopt (ABSEIL_TAR "abseil-${ABSEIL_TAG}.tar.gz"
+                    STRING "Abseil cache tar file")
 umbrella_defineopt (ABSEIL_URLMD5 "955b6faedf32ec2ce1b7725561d15618"
                     STRING "Abseil tar md5")
 
@@ -29,8 +32,8 @@ umbrella_defineopt (ABSEIL_URLMD5 "955b6faedf32ec2ce1b7725561d15618"
 # generate parts of the ExternalProject_Add args...
 #
 umbrella_download (ABSEIL_DOWNLOAD abseil
-                   ${ABSEIL_URLFILE}
-                   URL "${ABSEIL_BASEURL}/${ABSEIL_URLDIR}/${ABSEIL_URLFILE}"
+                   ${ABSEIL_TAR}
+                   URL "${ABSEIL_BASEURL}/${ABSEIL_URLDIR}/${ABSEIL_TAG}.tar.gz"
                    URL_MD5 ${ABSEIL_URLMD5}
                    )
 umbrella_patchcheck (ABSEIL_PATCHCMD abseil)

@@ -15,9 +15,9 @@ if (NOT TARGET dftracer)
 #
 # umbrella option variables
 #
-umbrella_defineopt (DFTRACER_REPO "https://github.com/LLNL/dftracer.git"
+umbrella_defineopt (DFTRACER_REPO "https://github.com/anku94/dftracer.git"
                     STRING "DFTracer GIT repository")
-umbrella_defineopt (DFTRACER_TAG "v2.0.2" STRING "DFTracer GIT tag")
+umbrella_defineopt (DFTRACER_TAG "main" STRING "DFTracer GIT tag")
 umbrella_defineopt (DFTRACER_TAR "dftracer-${DFTRACER_TAG}.tar.gz"
                     STRING "DFTracer cache tar file")
 

@@ -7,7 +7,8 @@
 # config:
 #  RE2_BASEURL - base url of re2
 #  RE2_URLDIR  - subdir in base where util-linux lives
-#  RE2_URLFILE - tar file within urldir
+#  RE2_TAG     - upstream release tag
+#  RE2_TAR     - local cache tar file
 #  RE2_URLMD5  - md5 of tar file
 #
 
@@ -20,8 +21,10 @@ umbrella_defineopt (RE2_BASEURL "https://github.com/google/re2"
                     STRING "re2 base url")
 umbrella_defineopt (RE2_URLDIR "archive/refs/tags"
                     STRING "re2 subdir")
-umbrella_defineopt (RE2_URLFILE "2022-06-01.tar.gz"
-                    STRING "re2 tar file")
+umbrella_defineopt (RE2_TAG "2022-06-01"
+                    STRING "re2 release tag")
+umbrella_defineopt (RE2_TAR "re2-${RE2_TAG}.tar.gz"
+                    STRING "re2 cache tar file")
 umbrella_defineopt (RE2_URLMD5 "cb629f38da6b7234a9e9eba271ded5d6"
                     STRING "re2 tar md5")
 
@@ -29,8 +32,8 @@ umbrella_defineopt (RE2_URLMD5 "cb629f38da6b7234a9e9eba271ded5d6"
 # generate parts of the ExternalProject_Add args...
 #
 umbrella_download (RE2_DOWNLOAD re2
-                   ${RE2_URLFILE}
-                   URL "${RE2_BASEURL}/${RE2_URLDIR}/${RE2_URLFILE}"
+                   ${RE2_TAR}
+                   URL "${RE2_BASEURL}/${RE2_URLDIR}/${RE2_TAG}.tar.gz"
                    URL_MD5 ${RE2_URLMD5})
 umbrella_patchcheck (RE2_PATCHCMD re2)
 

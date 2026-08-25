@@ -7,7 +7,8 @@
 # config:
 #  THRIFT_BASEURL - base url of thrift
 #  THRIFT_URLDIR  - subdir in base where util-linux lives
-#  THRIFT_URLFILE - tar file within urldir
+#  THRIFT_TAG     - upstream release tag
+#  THRIFT_TAR     - local cache tar file
 #  THRIFT_URLMD5  - md5 of tar file
 #
 
@@ -20,8 +21,10 @@ umbrella_defineopt(THRIFT_BASEURL "https://github.com/apache/thrift"
                     STRING "thrift base url")
 umbrella_defineopt(THRIFT_URLDIR "archive/refs/tags"
                     STRING "thrift url dir")
-umbrella_defineopt(THRIFT_URLFILE "v0.22.0.tar.gz"
-                    STRING "thrift url file")
+umbrella_defineopt(THRIFT_TAG "v0.22.0"
+                    STRING "thrift release tag")
+umbrella_defineopt(THRIFT_TAR "thrift-${THRIFT_TAG}.tar.gz"
+                    STRING "thrift cache tar file")
 umbrella_defineopt(THRIFT_URLMD5 "a91b02cfbbfd90c18c7621e8ea6fb234"
                     STRING "thrift url md5")
 
@@ -34,8 +37,8 @@ endif (POLICY CMP0148)
 # generate parts of the ExternalProject_Add args...
 #
 umbrella_download (THRIFT_DOWNLOAD thrift
-                   ${THRIFT_URLFILE}
-                   URL "${THRIFT_BASEURL}/${THRIFT_URLDIR}/${THRIFT_URLFILE}"
+                   ${THRIFT_TAR}
+                   URL "${THRIFT_BASEURL}/${THRIFT_URLDIR}/${THRIFT_TAG}.tar.gz"
                    URL_MD5 ${THRIFT_URLMD5})
 umbrella_patchcheck (THRIFT_PATCHCMD thrift)
 

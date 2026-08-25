@@ -19,12 +19,11 @@ if (NOT TARGET hdf5)
 
 #
 # umbrella option variables
-# NOTE: hdf5 guys use "develop" for their main branch, not master
 #
 umbrella_defineopt (HDF5_REPO 
                     "https://github.com/HDFGroup/hdf5.git"
                     STRING "HDF5 GIT repository")
-umbrella_defineopt (HDF5_TAG "develop" STRING "HDF5 GIT tag")
+umbrella_defineopt (HDF5_TAG "hdf5_1_12_2" STRING "HDF5 GIT tag")
 umbrella_defineopt (HDF5_TAR "hdf5-${HDF5_TAG}.tar.gz"
      STRING "HDF5 cache tar file")
 umbrella_buildtests(hdf5 HDF5_BUILDTESTS)

@@ -40,6 +40,9 @@ set (UMBRELLA_CXX_STANDARD 17)   # default C++ standard
 
 include (umbrella-main)
 
+# Package combos are selected via UMBRELLA_PROFILE variants below.
+set (UMBRELLA_PROFILE "FULL" CACHE STRING "Build profile: DEPS FULL ADAE EVAL XTRA")
+
 #
 # set default options for packages
 #
@@ -50,9 +53,6 @@ umbrella_opt_default (MERCURY_NA_INITIALLY_ON "sm")
 umbrella_opt_default (ORCA_KOKKOS_HOOKS ON)
 
 # Options for Parthenon stack
-umbrella_opt_default (PARTHENON_TAG "lb3bar")
-umbrella_opt_default (PHOEBUS_TAG "lb")
-umbrella_opt_default(HDF5_TAG "hdf5_1_12_2")
 umbrella_opt_default(HDF5_ENABLE_PARALLEL "ON")
 
 #
@@ -66,9 +66,22 @@ list(APPEND UMBRELLA_CMAKECACHE -DMPI_CXX_SKIP_MPICXX:BOOL=${MPI_CXX_SKIP_MPICXX
 #
 umbrella_opt_default (GOOGLETEST_TAG "v1.15.2")
 umbrella_opt_default (MERCURY_REPO "https://github.com/chuckcranor/mercury.git")
-umbrella_opt_default (MERCURY_TAG "hg_rpcgen")
-umbrella_opt_default (DFTRACER_REPO "https://github.com/anku94/dftracer.git")
-umbrella_opt_default (DFTRACER_TAG "main")
+
+# Pin branch-based dependencies for the artifact build.
+if (UMBRELLA_PROFILE STREQUAL "ADAE")
+    umbrella_opt_default (AMR_TOOLS_TAG "830117f3")
+    umbrella_opt_default (GFLAGS_TAG "bdda022e")
+    umbrella_opt_default (GLOG_TAG "53d58e45")
+    umbrella_opt_default (MERCURY_TAG "6c2a9fce")
+    umbrella_opt_default (ORCA_TAG "9f83696a")
+    umbrella_opt_default (ORCA_UTILS_TAG "312fa24f")
+    umbrella_opt_default (PDLFS_COMMON_TAG "a0944244")
+    umbrella_opt_default (PHOEBUS_TAG "ad070269")
+    umbrella_opt_default (SNAPPY_TAG "747488a9")
+    umbrella_opt_default (YAML_CPP_TAG "e5fe9f2c")
+else()
+    umbrella_opt_default (MERCURY_TAG "hg_rpcgen")
+endif()
 
 #
 # any additional cache variables we want to add that are not already
@@ -89,8 +102,6 @@ umbrella_opt_default(ARROW_PARQUET ON)
 #   + Jul 2026: dftracer is removed as upstream dependencies seem to have gone offline.
 # - XTRA: FULL + packages for experimental ORCA utils (libunwind, dyninst, libbpf)
 #
-set (UMBRELLA_PROFILE "FULL" CACHE STRING "Build profile: DEPS FULL ADAE EVAL XTRA")
-
 set (UMBRELLA_PKGS_DEPS googletest mercury arrow yaml-cpp duckdb)
 set (UMBRELLA_PKGS_FULL orca orca-utils)
 set (UMBRELLA_PKGS_ADAE ${UMBRELLA_PKGS_FULL} phoebus)
